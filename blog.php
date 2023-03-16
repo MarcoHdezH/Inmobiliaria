@@ -1,36 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./build/css/app.css">
-    <title>Inmobiliaria Fedora´s</title>
-</head>
-<body>
-    <header class="header">
-        <div class="contenedor contenido-header">
-            <div class="barra">
-                <a href="/">
-                    <img src="./build/img/logo.svg" alt="Logotipo">
-                </a>
-                
-                <div class="mobile-menu">
-                    <img src="./build/img/barras.svg" alt="menu responsive">
-                </div>
-
-                <div class="derecha">
-                    <img class="dark-mode-boton" src="./build/img/dark-mode.svg" alt="modo oscuro">
-                    <nav class="navegacion">
-                        <a href="nosotros.html">Nosotros</a>
-                        <a href="anuncios.html">Anuncios</a>
-                        <a href="blog.html">Nuestro Blog</a>
-                        <a href="contacto.html">Contacto</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Header -->
+    <?php
+        include './includes/templates/header.php';
+    ?> <!---->
 
     <main class="contenedor seccion contenido-centrado">
         <h1>Nuestro blog</h1>
@@ -44,7 +15,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Terraza en el techo de tu casa</h4>
                     <p>Escrito el: <span>20/10/2021</span> por: <span>Admin</span></p>
                     <p>
@@ -64,7 +35,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Guía para la decoración de tu hogar</h4>
                     <p>Escrito el: <span>20/10/2021</span> por: <span>Admin</span></p>
                     <p>
@@ -84,7 +55,7 @@
             </div>
 
             <div class="texto-entrada">
-                <a href="entrada.html">
+                <a href="entrada.php">
                     <h4>Guía para la decoración de tu hogar</h4>
                     <p>Escrito el: <span>20/10/2021</span> por: <span>Admin</span></p>
                     <p>
