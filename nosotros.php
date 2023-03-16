@@ -1,7 +1,8 @@
     <!-- Header -->
     <?php
-        include './includes/templates/header.php';
-    ?><!---->
+        require './includes/funciones.php';
+        incluirTemplate('header');
+    ?> <!---->
 
     <main>
         <section class="contenedor seccion">
@@ -57,20 +58,7 @@
         </section>
     </main>
 
-
-    <footer class="footer seccion">
-        <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
-                <a href="nosotros.html">Nosotros</a>
-                <a href="anuncios.html">Anuncios</a>
-                <a href="blog.html">Nuestro Blog</a>
-                <a href="contacto.html">Contacto</a>
-            </nav>
-        </div>
-        <p class="copyright">Todos los derechos Reservados 2023 &copy;</p>
-    </footer>
-
-    <script src="./build/js/bundle.min.js"></script>
-</body>
-
-</html>
+    <!-- Footer -->
+    <?php
+        incluirTemplate('footer');
+    ?> <!---->
