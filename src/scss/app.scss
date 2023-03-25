@@ -6,7 +6,6 @@
 @import 'base/botones';
 @import 'layout/darkMode';
 
-
 /** UI **/
 @import 'layout/header';
 @import 'layout/footer';
@@ -20,3 +19,4 @@
 
 /**Paginas Internas**/
 @import 'layout/nosotros';
+@import 'layout/admin.scss';
