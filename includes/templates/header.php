@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./build/css/app.css">
+    <link rel="stylesheet" href="/build/css/app.css">
     <title>Inmobiliaria Fedora´s</title>
 </head>
 
@@ -15,15 +15,15 @@
         <div class="contenedor contenido-header">
             <div class="barra">
                 <a href="/">
-                    <img src="./build/img/logo.svg" alt="Logotipo">
+                    <img src="/build/img/logo.svg" alt="Logotipo">
                 </a>
 
                 <div class="mobile-menu">
-                    <img src="./build/img/barras.svg" alt="menu responsive">
+                    <img src="/build/img/barras.svg" alt="menu responsive">
                 </div>
 
                 <div class="derecha">
-                    <img class="dark-mode-boton" src="./build/img/dark-mode.svg" alt="modo oscuro">
+                    <img class="dark-mode-boton" src="/build/img/dark-mode.svg" alt="modo oscuro">
                     <nav class="navegacion">
                         <a href="nosotros.php">Nosotros</a>
                         <a href="anuncios.php">Anuncios</a>
