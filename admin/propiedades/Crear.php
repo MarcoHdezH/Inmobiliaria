@@ -4,7 +4,19 @@
 require '../../includes/config/database.php';
 $db=conectarDB();
 
+//Consultar Vendedores
+$consulta = "SELECT * FROM vendedores";
+$resultadoVendedores =  mysqli_query($db,$consulta);
+
 //Arreglo con Mensajes de Errores
+$errores = '';
+$titulo = '';
+$precio = '';
+$descripcion = '';
+$habitaciones = '';
+$wc = '';
+$estacionamiento = '';
+$vendedorId = '';
 $errores = [];
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -16,6 +28,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $wc = $_POST['wc'];
     $estacionamiento = $_POST['estacionamiento'];
     $vendedorId = $_POST['vendedor'];
+    $creado = date('Y/m/d');
 
     if(!$titulo){
         $errores[] = "Debes Añadir un titulo";
@@ -48,8 +61,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     //Revisar el Arreglo de Errores
     if(empty($errores)){
         //Insertar en la base de Datos
-        $query = "INSERT INTO propiedades (titulo,precio,descripcion,habitaciones,wc,estacionamiento,vendedorId) VALUES ('$titulo','$precio','$descripcion','$habitaciones','$wc','$estacionamiento','$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo,precio,descripcion,habitaciones,wc,estacionamiento,creado,vendedorId) VALUES ('$titulo','$precio','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId')";
         $resultado = mysqli_query($db,$query);
+
+        if($resultado){
+
+            header('Location:/admin');
+        }
     }
 }
 
@@ -69,29 +87,29 @@ incluirTemplate('header');
             <legend>Información General de Propiedad</legend>
 
             <label for="titulo">Titulo de Propiedad:</label>
-            <input id="titulo" name="titulo" type="text">
+            <input id="titulo" name="titulo" type="text" value="<?php echo $titulo ?>">
 
             <label for="precio">Precio de Propiedad:</label>
-            <input id="precio" name="precio" type="number">
+            <input id="precio" name="precio" type="number" value="<?php echo $precio ?>">
 
             <label for="imagen">Imagen:</label>
             <input id="imagen" name="imagen" type="file" accept="image/jpeg, image/png">
 
             <label for="descripcion">Descripcion de Propiedad:</label>
-            <textarea id="descripcion" name="descripcion"></textarea>
+            <textarea id="descripcion" name="descripcion" value="<?php echo $descripcion ?>" ></textarea>
         </fieldset>
 
         <fieldset>
             <legend>Información específica Propiedad</legend>
 
             <label for="habitaciones">No. de habitaciones:</label>
-            <input id="habitaciones" name="habitaciones" type="number" min="1" max="9">
+            <input id="habitaciones" name="habitaciones" type="number" min="1" max="9" value="<?php echo $habitaciones ?>">
 
             <label for="wc">No. de Baños:</label>
-            <input id="wc" type="number" name="wc" min="1" max="9">
+            <input id="wc" type="number" name="wc" min="1" max="9" value="<?php echo $wc ?>">
 
             <label for="estacionamiento">Cajones de Estacionamiento:</label>
-            <input id="estacionamiento" name="estacionamiento" type="number" min="1" max="9">
+            <input id="estacionamiento" name="estacionamiento" type="number" min="1" max="9" value="<?php echo $estacionamiento ?>">
         </fieldset>
 
         <fieldset>
@@ -99,8 +117,9 @@ incluirTemplate('header');
 
             <select name="vendedor">
                 <option value="" disabled selected>-- Seleccione una Opción --</option>
-                <option value="1">Juan</option>
-                <option value="2">Karen</option>
+                <?php while($vendedor=mysqli_fetch_assoc($resultadoVendedores)) :?>
+                    <option <?php echo $vendedorId===$vendedor['id'] ? 'selected' : ''; ?>  value="<?php echo $vendedor['id'] ?>"><?php echo $vendedor['nombre']." ".$vendedor['apellido'] ?></option>
+                <?php endwhile; ?>
             </select>
         </fieldset>
 
