@@ -71,10 +71,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $errores[] = "Debes Añadir un Vendedor";
     }
 
-    if(!$imagen['name'] || $imagen['error']){
-        $errores[] = "Debes Añadir una Imagen de la Propiedad";
-    }
-
     //Validad Tamaño de Imagenes
     $medida = 1000*100;
     if($imagen['size']>$medida){
@@ -89,17 +85,21 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if(!is_dir($carpetaImagenes)){
             mkdir($carpetaImagenes);
         }
-        //Subir Imagen
-        $nombreImagen=md5(uniqid(rand(),true)).".jpg";
 
-        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes.$nombreImagen);
-        
+        if($imagen['name']){
+            unlink($carpetaImagenes.$Propiedades['imagen']);
+            //Subir Imagen
+            $nombreImagen=md5(uniqid(rand(),true)).".jpg";
+            move_uploaded_file($imagen['tmp_name'],$carpetaImagenes.$nombreImagen);
+        }else{
+            $nombreImagen=$Propiedades['imagen'];
+        }
+
         //Insertar en la base de Datos
-        $query = "INSERT INTO propiedades (titulo,precio,imagen,descripcion,habitaciones,wc,estacionamiento,creado,vendedorId) VALUES ('$titulo','$precio','$nombreImagen','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId')";
+        $query = "UPDATE propiedades SET titulo='$titulo',precio=$precio,imagen='$nombreImagen',descripcion='$descripcion',habitaciones=$habitaciones,wc=$wc,estacionamiento=$estacionamiento,vendedorId=$vendedorId WHERE id=$id";
         $resultado = mysqli_query($db,$query);
-
         if($resultado){
-            header('Location:/admin?resultado=1');
+            header('Location:/admin?resultado=2');
         }
     }
 }
@@ -115,7 +115,7 @@ incluirTemplate('header');
             <?php echo $error; ?>
         </div>
     <?php endforeach; ?>
-    <form class="formulario" action="/admin/propiedades/Crear.php" method="POST" enctype="multipart/form-data">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General de Propiedad</legend>
 

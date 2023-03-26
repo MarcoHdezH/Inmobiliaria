@@ -19,6 +19,10 @@ incluirTemplate('header');
     <?php if (intval($resultado) === 1) : ?>
         <P class="alerta exito">Anuncio Creado Correctamente</P>
     <?php endif ?>
+
+    <?php if (intval($resultado) === 2) : ?>
+        <P class="alerta exito">Anuncio Actualizado Correctamente</P>
+    <?php endif ?>
     <a href="/admin/propiedades/Crear.php" class="boton boton-verde">Nueva Propiedad</a>
 
     <table class="propiedades">
