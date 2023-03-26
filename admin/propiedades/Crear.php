@@ -9,7 +9,6 @@ $consulta = "SELECT * FROM vendedores";
 $resultadoVendedores =  mysqli_query($db,$consulta);
 
 //Arreglo con Mensajes de Errores
-$errores = '';
 $titulo = '';
 $precio = '';
 $descripcion = '';
@@ -119,7 +118,7 @@ incluirTemplate('header');
             <input id="imagen" name="imagen" type="file" accept="image/jpeg, image/png">
 
             <label for="descripcion">Descripcion de Propiedad:</label>
-            <textarea id="descripcion" name="descripcion" value="<?php echo $descripcion ?>" ></textarea>
+            <textarea id="descripcion" name="descripcion" value="<?php echo $descripcion;?>"><?php echo $descripcion; ?></textarea>
         </fieldset>
 
         <fieldset>
