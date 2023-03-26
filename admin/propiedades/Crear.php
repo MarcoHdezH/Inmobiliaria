@@ -20,15 +20,18 @@ $vendedorId = '';
 $errores = [];
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $titulo = $_POST['titulo'];
-    $precio = $_POST['precio'];
-    // $imagen = $_POST['imagen'];
-    $descripcion = $_POST['descripcion'];
-    $habitaciones = $_POST['habitaciones'];
-    $wc = $_POST['wc'];
-    $estacionamiento = $_POST['estacionamiento'];
-    $vendedorId = $_POST['vendedor'];
+
+
+    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
+    $precio = mysqli_real_escape_string($db, $_POST['precio']);
+    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
+    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
+    $wc = mysqli_real_escape_string($db, $_POST['wc']);
+    $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
+    $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
     $creado = date('Y/m/d');
+
+    $imagen = ($_FILES['imagen']);
 
     if(!$titulo){
         $errores[] = "Debes Añadir un titulo";
@@ -58,15 +61,35 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $errores[] = "Debes Añadir un Vendedor";
     }
 
+    if(!$imagen['name'] || $imagen['error']){
+        $errores[] = "Debes Añadir una Imagen de la Propiedad";
+    }
+
+    //Validad Tamaño de Imagenes
+    $medida = 1000*100;
+    if($imagen['size']>$medida){
+        $errores[]="La imagen es muy Pesada para Subir";
+    }
+
     //Revisar el Arreglo de Errores
     if(empty($errores)){
+
+        /* Subida de Archivos */
+        $carpetaImagenes='../../images/';
+        if(!is_dir($carpetaImagenes)){
+            mkdir($carpetaImagenes);
+        }
+        //Subir Imagen
+        $nombreImagen=md5(uniqid(rand(),true)).".jpg";
+
+        move_uploaded_file($imagen['tmp_name'],$carpetaImagenes.$nombreImagen);
+        
         //Insertar en la base de Datos
-        $query = "INSERT INTO propiedades (titulo,precio,descripcion,habitaciones,wc,estacionamiento,creado,vendedorId) VALUES ('$titulo','$precio','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId')";
+        $query = "INSERT INTO propiedades (titulo,precio,imagen,descripcion,habitaciones,wc,estacionamiento,creado,vendedorId) VALUES ('$titulo','$precio','$nombreImagen','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId')";
         $resultado = mysqli_query($db,$query);
 
         if($resultado){
-
-            header('Location:/admin');
+            header('Location:/admin?resultado=1');
         }
     }
 }
@@ -82,7 +105,7 @@ incluirTemplate('header');
             <?php echo $error; ?>
         </div>
     <?php endforeach; ?>
-    <form class="formulario" action="/admin/propiedades/Crear.php" method="POST">
+    <form class="formulario" action="/admin/propiedades/Crear.php" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Información General de Propiedad</legend>
 
