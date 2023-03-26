@@ -11,6 +11,28 @@ $query = "SELECT * FROM propiedades";
 $conexion = mysqli_query($db, $query);
 
 $resultado = $_GET['resultado'] ?? null;
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    $id = $_POST['id'];
+    $id = filter_var($id,FILTER_VALIDATE_INT);
+
+    if($id){
+
+        //Eliminando Imagen
+        $query = "SELECT imagen FROM propiedades WHERE id=$id";
+        $resultado = mysqli_query($db,$query);
+        $propiedad = mysqli_fetch_assoc($resultado);
+        unlink('../images/'.$propiedad['imagen']);
+
+        //Elimina la Propiedad
+        $query="DELETE FROM propiedades WHERE id=$id";
+        $resultado = mysqli_query($db,$query);
+        if($resultado){
+            header('Location:/admin?resultado=3');
+        }
+    }
+}
+
 require '../includes/funciones.php';
 incluirTemplate('header');
 ?>
@@ -22,6 +44,10 @@ incluirTemplate('header');
 
     <?php if (intval($resultado) === 2) : ?>
         <P class="alerta exito">Anuncio Actualizado Correctamente</P>
+    <?php endif ?>
+
+    <?php if (intval($resultado) === 2) : ?>
+        <P class="alerta exito">Anuncio Borrado Correctamente</P>
     <?php endif ?>
     <a href="/admin/propiedades/Crear.php" class="boton boton-verde">Nueva Propiedad</a>
 
@@ -44,7 +70,10 @@ incluirTemplate('header');
                     <td><img class="imagen-tabla" src="/images/<?php echo $propiedad['imagen']; ?>"></td>
                     <td><?php echo $propiedad['precio'] ?></td>
                     <td>
-                        <a class="boton-rojo-block" href="/admin/propiedades/Borrar.php">Eliminar</a>
+                        <form method="POST" class="w-100">
+                            <input type="hidden" name="id" value="<?php echo $propiedad['id'];?>">
+                            <input class="boton-rojo-block" type="submit" value="Eliminar">
+                        </form>
                         <a class="boton-amarillo-block" href="/admin/propiedades/Actualizar.php?id=<?php echo $propiedad['id'] ?>">Actualizar</a>
                     </td>
                 </tr>
