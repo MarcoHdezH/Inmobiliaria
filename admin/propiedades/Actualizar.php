@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
 
     //Validad Tamaño de Imagenes
-    $medida = 1000*100;
+    $medida = 2000*100;
     if($imagen['size']>$medida){
         $errores[]="La imagen es muy Pesada para Subir";
     }
