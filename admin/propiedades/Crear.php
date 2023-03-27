@@ -1,4 +1,11 @@
 <?php
+//Autenticacion de Usuario
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if(!$auth){
+    header('Location: /');
+}
 
 //DataBase
 require '../../includes/config/database.php';
@@ -93,7 +100,6 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 <main class="contenedor seccion">

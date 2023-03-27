@@ -1,5 +1,13 @@
 <?php
 
+require '../includes/funciones.php';
+
+$auth = estaAutenticado();
+
+if(!$auth){
+    header('Location: /');
+}
+
 //Importar Conexion
 require '../includes/config/database.php';
 $db  = conectarDB();
@@ -33,11 +41,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
 }
 
-require '../includes/funciones.php';
 incluirTemplate('header');
 ?>
 <main class="contenedor seccion">
-    <h1>Administrador de Inmobiliaria</h1>
+    <h1>Administrador de Inmobiliaria (<?php echo $_SESSION['usuario'] ?>)</h1>
     <?php if (intval($resultado) === 1) : ?>
         <P class="alerta exito">Anuncio Creado Correctamente</P>
     <?php endif ?>

@@ -1,5 +1,12 @@
 <?php
 
+require '../../includes/funciones.php';
+$auth = estaAutenticado();
+
+if(!$auth){
+    header('Location: /');
+}
+
 $id = $_GET['id'];
 $id = filter_var($id,FILTER_VALIDATE_INT);
 
@@ -103,10 +110,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         }
     }
 }
-
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
+
 <main class="contenedor seccion">
     <h1>Actualizar Propiedad</h1>
     <a href="/admin" class="boton boton-verde">Volver</a>
