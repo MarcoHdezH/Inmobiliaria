@@ -1,0 +1,16 @@
+{
+    "name": "marco/inmobiliaria",
+    "description": "Inmobiliaria POO",
+    "type":"project",
+    "autoload": {
+        "psr-4": {
+            "Inmobiliaria\\": "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marco Hernandez"
+        }
+    ],
+    "require": {}
+}
